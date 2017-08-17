@@ -1,0 +1,85 @@
+---
+title: "Vapor-Liquid Equilibrium Calculator"
+author: "René Marves, ChE"
+date: "August 16, 2017"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(plotly)
+```
+
+## Introduction
+
+Whenever there is a liquid, part of that liquid evaporates, forming a vapor above it.  When it's a pure compound, the prediction of the outcome is quite simple.  Nevertheless, when it's a mixture of 2 or more compounds, the behavior is not that simple.
+
+When there are 2 or more pure compounds, there is a mixture effect which causes a mix of vapors to exist and that allows the solution to start evaporating at a point and finish evaporating at another one, opposed to a single point of evaporation/condensation.  This difference allows for destillation to occur and why it's used to purify compunds.
+
+This App calculates this equilibrium at an ideal level, which means that it uses a prediction model that ignores complex intermolecular interactions.  But this simplicity is perfect to start understanding the concepts.
+
+## Functions
+
+There are 4 major functions used in the app:
+
+- Tbubl: This function calculaes the bubble point for a system at constant pressure.
+- Tdew: This function calculates the dew point for a system at constant pressure.
+- Pbuble: This function calculaes the bubble point for a system at constant temperature.
+- Pdew: This function calculates the dew point for a system at constant temperature.
+
+In addition, the following are also ussed for support:
+
+- Psat: Saturation Pressure function based on the Antoine equation.
+- Tsat: Inverse of Psat.
+- AntoineDB: Database of the Antoine Coeffients to be used with the equations.
+
+## Examples:
+
+Here are some examples of the calculations that can be done by the functions:
+
+```{r sample calculations, echo=TRUE, message=FALSE, warning=FALSE}
+source("RaoultFunctions binary.R")
+# Calculates Bubble Point Temperature (boiling point) for Ethanol/Water at regular admospheric
+# pressure, of a 50% ethanol mixture
+Tbubl(0.5, 101, c(CompID("ethanol"), CompID("water")))
+# Calculates Dew Point Temperature (condensation point) for the same case as before.
+Tdew(0.5, 101, c(CompID("ethanol"), CompID("water")))
+# Calculates Bubble Point Pressure (boiling point) for Ethanol/Water at room temperature,
+# of a 50% ethanol mixture
+Pbubl(0.5, 25, c(CompID("ethanol"), CompID("water")))
+# Calculates Dew Point pressure (condensation point) for the same case as before.
+Pdew(0.5, 25, c(CompID("ethanol"), CompID("water")))
+```
+
+## Plot example 1
+
+The examples before are best understood with plots.  This is a constant pressure example of ethanol and water, with the pressure being the same as standard atmospheric pressure.
+
+```{r plot 1, message=FALSE, warning=FALSE}
+x.y <- 1:100/100
+comps <- c(CompID("ethanol"), CompID("water"))
+tf <- as.data.frame(
+  cbind("Fraction" = x.y, "Dew.Temperature" = Tdew(x.y,101,comps),
+        "Bubble.Temperature" = Tbubl(x.y,101,comps)))
+plot_ly(tf, x = ~Fraction) %>% 
+  add_lines(y = ~Dew.Temperature, name = "Dew Temperature", line = list(color = 'rgb(204,0,0)')) %>% 
+  add_lines(y = ~Bubble.Temperature, name = "Bubble Temperature", line = list(color = 'rgb(0,0,153)')) %>% 
+  layout(yaxis=list(title = "Temperature (ºC)"))
+
+```
+
+## Plot example 2
+
+This is a constant temperature example of ethanol and water, with the temperature being the same as standard room temperature.
+
+```{r plot 2, message=FALSE, warning=FALSE}
+tf <- as.data.frame(
+  cbind("Fraction" = x.y, "Dew.Pressure" = Pdew(x.y,25,comps),
+        "Bubble.Pressure" = Pbubl(x.y,25,comps)))
+plot_ly(tf, x = ~Fraction) %>% 
+  add_lines(y = ~Dew.Pressure, name = "Dew Pressure", line = list(color = 'rgb(204,0,0)')) %>% 
+  add_lines(y = ~Bubble.Pressure, name = "Bubble Pressure", line = list(color = 'rgb(0,0,153)')) %>% 
+  layout(yaxis=list(title = "Pressure (mmHg)"))
+```
+
+The App is running at https://rfmarves.shinyapps.io/IdealVLEcalc/
