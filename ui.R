@@ -55,6 +55,25 @@ shinyUI(fluidPage(
       plotlyOutput("VLEplot")
     )
   ),
+  p("Background theory:"),
+  p('Whenever there is a liquid, part of that liquid evaporates, creating that liquid\'s vapor on the space 
+    above it.  This vapor will exert a pressure in its environment. Whenever the pressure exerted by a 
+    liquid\'s vapor is the same as the current atmospheric pressure, that liquid will boil and fully evaporate.
+    This point where the pressure of the vapor is the same as the atmospheric pressure is called the "Bubble point".'),
+  p('The "Dew Point" is the point where a vapor starts to condensate and become a liquid again.  For a pure 
+    compound, the Dew Point and Bubble Points are always the same, but when a there is a mixture of liquids,
+    these points deviate one from the other, giving a range of temperature or pressure over which the mixture
+    is a combination of liquid and vapor.  This occurence is called the "Vapor-Liquid Equilibrium". It\'s this 
+    phenomenon that allows for liquid combinations to be distilled and pure compounds obtained from a solution.'),
+  p('The default system for this example is one of the most common ones there is: ethanol (also called rubbing
+    alcohol or drinking alcohol) and water.  The model presented is an ideal one, which doesn\'t take into
+    account the peculiarities of molecular interaction due to the each component\'s nature.  There are more
+    exact models, but this is still the beginner\'s model for understanding the Equilibrium between liquids and
+    vapors.'),
+  p('Play around with this app to examine how diferent systems would behave.  The Plotly graph will allow you
+    examine particular data points.  Keep in mind the units that are required and that standard conditions are
+    101 kPa and 25ºC.  101 kPa equal the same pressure the atmosphere has at sea level and 25ºC is the standard
+    room temperature.'),
   p("To learn more about Vapor-Liquid equilibrium in general, you can check out this article:", br(),
   HTML('<a href="https://en.wikibooks.org/wiki/Introduction_to_Chemical_Engineering_Processes/Vapor-Liquid_equilibrium">
          Introduction to Chemical Engineering Process/Vapor-Liquid equilibrium</a>')),
