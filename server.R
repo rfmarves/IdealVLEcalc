@@ -2,7 +2,7 @@ library(shiny)
 library(plotly)
 library(shinyBS)
 
-source("RaultFunctions binary.R")
+source("RaoultFunctions binary.R")
 
 # Starting x values for plot
 x.y <- 1:100/100
@@ -34,7 +34,7 @@ shinyServer(function(input, output, session) {
       plot_ly(tf, x = ~Fraction) %>% 
       add_lines(y = ~Dew.Temperature, name = "Dew Temperature", line = list(color = 'rgb(204,0,0)')) %>% 
       add_lines(y = ~Bubble.Temperature, name = "Bubble Temperature", line = list(color = 'rgb(0,0,153)')) %>% 
-      layout(yaxis=list(title = "Temperature (ÂºC)"))
+      layout(yaxis=list(title = "Temperature (ºC)"))
     } else {
       tf <- as.data.frame(
         cbind("Fraction" = x.y, "Dew.Pressure" = Pdew(x.y,input$Temp,comps),

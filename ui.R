@@ -44,9 +44,9 @@ shinyUI(fluidPage(
                    value = 101, min = 1, max = 101*5, step = 1),
       bsTooltip(id = "Pres", title = "Enter the pressure here. 101kPa is 1 atmosphere.",
                 placement = "right", trigger = "hover"),
-      numericInput("Temp", "Enter Temperature (in ÂºC):", 
+      numericInput("Temp", "Enter Temperature (in ºC):", 
                    value = 25, min = -273, max = 2000, step = 1),
-      bsTooltip(id = "Temp", title = "Enter the TEmperature here, in degree Celcius. 25ÂºC is standard room temp.",
+      bsTooltip(id = "Temp", title = "Enter the TEmperature here, in degree Celcius. 25ºC is standard room temp.",
                 placement = "right", trigger = "hover")
     ),
     
@@ -61,5 +61,6 @@ shinyUI(fluidPage(
   p("More on Antoine's equation at:", HTML('<a href="https://en.wikipedia.org/wiki/Antoine_equation">Wikipedia: Antoine equation</a>')),
   p("More on Raoult's Law at:", HTML('<a href="https://en.wikipedia.org/wiki/Raoult%27s_law">Wikipedia: Raoult\'s Law</a>')),
   p("Reference to construct this app (Raoult's Law equations, Antoine equations and Antoine coefficients):", br(),
-  em("Introduction to Thermodynamics in Chemical Engineering, 6th edition. Smith, Van Ness and Abbott."))
+  em("Introduction to Thermodynamics in Chemical Engineering, 6th edition. Smith, Van Ness and Abbott.")),
+  p('Source code in ', HTML('<a href="https://github.com/rfmarves/IdealVLEcalc">GitHub</a>'))
 ))
